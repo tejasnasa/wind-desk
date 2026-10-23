@@ -1,0 +1,11 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+frontend/node_modules
+frontend/dist
+tools/shots/node_modules
+*.log

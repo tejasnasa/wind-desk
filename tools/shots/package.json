@@ -1,0 +1,13 @@
+{
+  "name": "wind-desk-tools",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Screenshot tooling for the demo video and README (not part of the app).",
+  "scripts": {
+    "shots": "node shots.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.56.0"
+  }
+}

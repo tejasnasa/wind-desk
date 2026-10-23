@@ -1,0 +1,44 @@
+name: wind-desk
+
+services:
+  api:
+    build:
+      context: ./backend
+    image: wind-desk-api:local
+    environment:
+      WIND_DB_PATH: /data/wind.db
+      GATE_CLOSURE_TIME: "11:00"
+      MARKET_TIMEZONE: Europe/London
+      ANALYSIS_FROM: "2026-01-01"
+      ANALYSIS_TO: "2026-01-31"
+      CORS_ORIGINS: "*"
+    volumes:
+      # The seeded store lives in the repository, so `docker compose run --rm
+      # api python -m scripts.seed` refreshes it in place.
+      - ./backend/data:/data
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./frontend
+    image: wind-desk-web:local
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  # One-shot data refresh from the Elexon API:
+  #   docker compose run --rm ingest
+  ingest:
+    build:
+      context: ./backend
+    image: wind-desk-api:local
+    profiles: ["tools"]
+    environment:
+      WIND_DB_PATH: /data/wind.db
+    volumes:
+      - ./backend/data:/data
+    command: ["python", "-m", "scripts.seed"]

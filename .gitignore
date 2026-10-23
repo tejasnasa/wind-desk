@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Node
+node_modules/
+frontend/dist/
+.vite/
+
+# Local data and logs (the seeded database is committed on purpose)
+*.log
+run-*.out.log
+backend/data/*.db-journal
+backend/data/*.db-wal
+backend/data/*.db-shm
+
+# Environment
+.env
+.env.local
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
