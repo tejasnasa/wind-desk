@@ -1,0 +1,427 @@
+{
+  "meta": {
+    "title": "Wind Desk - day-ahead wind forecast & accuracy portal",
+    "voice": "Microsoft David Desktop",
+    "rate": 0,
+    "gap": 0.32,
+    "leadIn": 0.45,
+    "appLeadIn": 2.3,
+    "tail": 0.7
+  },
+  "scenes": [
+    {
+      "id": "p1-01",
+      "part": 1,
+      "kind": "card",
+      "variant": "title",
+      "heading": "Wind Desk",
+      "subheading": "Day-ahead wind forecast & accuracy portal",
+      "meta": "Pilot delivery · National wind · January 2026 decisions",
+      "lines": [
+        {
+          "id": "p1-01-l1",
+          "text": "This is Wind Desk, a pilot for the day-ahead wind position, built from Elexon's own public data for the January 2026 decisions."
+        }
+      ]
+    },
+    {
+      "id": "p1-02",
+      "part": 1,
+      "kind": "app",
+      "route": "/",
+      "screen": "Overview",
+      "steps": [
+        { "do": "goto" },
+        { "do": "settle" },
+        { "do": "scroll", "to": "top" },
+        { "do": "wait", "ms": 1500 }
+      ],
+      "lines": [
+        {
+          "id": "p1-02-l1",
+          "text": "Every morning at eleven, the auction closes and you commit to a position for tomorrow. The input you cannot control is the wind, and the only forecast you may buy against is the one published before that cut-off."
+        },
+        {
+          "id": "p1-02-l2",
+          "text": "So two questions decide your morning: what did we actually know at eleven, and how wrong has that forecast been when we look back?"
+        },
+        {
+          "id": "p1-02-l3",
+          "text": "Everything you will see is computed from Elexon's public data."
+        }
+      ]
+    },
+    {
+      "id": "p1-03",
+      "part": 1,
+      "kind": "app",
+      "route": "/",
+      "screen": "Overview",
+      "steps": [
+        { "do": "goto" },
+        { "do": "settle" },
+        { "do": "scroll", "to": "top" },
+        { "do": "wait", "ms": 900, "atLine": "p1-03-l1" },
+        {
+          "do": "scroll",
+          "to": "panel:Delivery-day wind profile",
+          "atLine": "p1-03-l2"
+        },
+        { "do": "wait", "ms": 1200 }
+      ],
+      "lines": [
+        {
+          "id": "p1-03-l1",
+          "text": "Here is the headline. The forecast you buy against is, on average, one thousand eight hundred and forty megawatts too high. About sixteen per cent more wind promised than delivered."
+        },
+        {
+          "id": "p1-03-l2",
+          "text": "That is not noise. That is a systematic bias, and it means a desk covering purely for the published forecast is quietly short every day."
+        }
+      ]
+    },
+    {
+      "id": "p1-04",
+      "part": 1,
+      "kind": "app",
+      "route": "/",
+      "screen": "Overview",
+      "steps": [
+        { "do": "goto" },
+        { "do": "settle" },
+        { "do": "scroll", "to": "panel:Delivery-day wind profile" },
+        { "do": "wait", "ms": 1000, "atLine": "p1-04-l1" }
+      ],
+      "lines": [
+        {
+          "id": "p1-04-l1",
+          "text": "The typical miss is two thousand one hundred and twenty-three megawatts. The ninety-fifth percentile band, the worst one in twenty periods, is five thousand five hundred and eighty-four."
+        },
+        {
+          "id": "p1-04-l2",
+          "text": "That is a hundred and thirty-four gigawatt hours in a single day."
+        },
+        {
+          "id": "p1-04-l3",
+          "text": "That last number is the one I would take to your risk committee: what a one in twenty shortfall costs you, per day, in energy."
+        }
+      ]
+    },
+    {
+      "id": "p1-05",
+      "part": 1,
+      "kind": "app",
+      "route": "/decision?day=2026-01-06",
+      "screen": "Decision board",
+      "steps": [
+        { "do": "goto" },
+        { "do": "settle" },
+        { "do": "scroll", "to": "top" },
+        { "do": "wait", "ms": 1200, "atLine": "p1-05-l1" },
+        { "do": "scroll", "to": "panel:Wind profile", "atLine": "p1-05-l2" }
+      ],
+      "lines": [
+        {
+          "id": "p1-05-l1",
+          "text": "Here is the core of the tool. Pick a delivery day and it shows the exact forecast vintage that existed before the cut-off, here the nine-thirty publication on the fifth, with the settled outturn underneath."
+        },
+        {
+          "id": "p1-05-l2",
+          "text": "Two things to notice. The shape of the day is well captured; the forecast tracks the outturn closely. The level is not: it sits above the actual for most of the day. Shape good, level biased."
+        },
+        {
+          "id": "p1-05-l3",
+          "text": "And the shaded band is not a guess. It is January's measured error distribution, applied to this forecast."
+        }
+      ]
+    },
+    {
+      "id": "p1-06",
+      "part": 1,
+      "kind": "app",
+      "route": "/decision?day=2026-01-06",
+      "screen": "Decision board",
+      "steps": [
+        { "do": "goto" },
+        { "do": "settle" },
+        { "do": "scroll", "to": "panel:Information timeline" },
+        { "do": "wait", "ms": 1200, "atLine": "p1-06-l1" }
+      ],
+      "lines": [
+        {
+          "id": "p1-06-l1",
+          "text": "Before we commit, ask: when did we know this? The timeline shows every publication that existed before the cut-off, and how wrong each one would have been."
+        },
+        {
+          "id": "p1-06-l2",
+          "text": "The eleven-thirty publication is not on the chart, because it lands half an hour after the auction closes. You cannot buy with it. The tool enforces that rule rather than leaving it to discipline."
+        }
+      ]
+    },
+    {
+      "id": "p1-07",
+      "part": 1,
+      "kind": "app",
+      "route": "/decision?day=2026-01-06",
+      "screen": "Decision board",
+      "steps": [
+        { "do": "goto" },
+        { "do": "settle" },
+        { "do": "scroll", "to": "panel:Procurement risk band" },
+        { "do": "wait", "ms": 1200, "atLine": "p1-07-l1" },
+        {
+          "do": "scroll",
+          "to": "panel:Settlement periods",
+          "atLine": "p1-07-l2"
+        }
+      ],
+      "lines": [
+        {
+          "id": "p1-07-l1",
+          "text": "This is the operational output. With the forecast and a measured band, the residual requirement is covered up to forecast minus band in the downside case: roughly one thousand one hundred and forty-six megawatts of extra thermal for a one in twenty shortfall."
+        },
+        {
+          "id": "p1-07-l2",
+          "text": "Below is the half-hourly view: every settlement period, the forecast, the outturn and the direction of the error, so you can see which hours the forecast was carrying the book."
+        }
+      ]
+    },
+    {
+      "id": "p1-08",
+      "part": 1,
+      "kind": "app",
+      "route": "/accuracy",
+      "screen": "Accuracy",
+      "steps": [
+        { "do": "goto" },
+        { "do": "settle" },
+        {
+          "do": "scroll",
+          "to": "panel:Settlement-period error ribbon",
+          "atLine": "p1-08-l1"
+        }
+      ],
+      "lines": [
+        {
+          "id": "p1-08-l1",
+          "text": "Zoom out to the month. Every settlement period of January, coloured by error: rust means wind was under-delivered, green means it over-delivered."
+        },
+        {
+          "id": "p1-08-l2",
+          "text": "You can see the whole month's bias at a glance, and the days where it flipped."
+        }
+      ]
+    },
+    {
+      "id": "p1-09",
+      "part": 1,
+      "kind": "app",
+      "route": "/accuracy",
+      "screen": "Accuracy",
+      "steps": [
+        { "do": "goto" },
+        { "do": "settle" },
+        { "do": "scroll", "to": "top" },
+        { "do": "wait", "ms": 700, "atLine": "p1-09-l1" },
+        {
+          "do": "scroll",
+          "to": "panel:Forecast skill versus a naive baseline"
+        }
+      ],
+      "lines": [
+        {
+          "id": "p1-09-l1",
+          "text": "One more thing, because a forecast has to earn its place: against the naive assumption of carrying yesterday's outturn forward, the published forecast is forty-six per cent better. It is worth buying."
+        }
+      ]
+    },
+    {
+      "id": "p1-10",
+      "part": 1,
+      "kind": "card",
+      "variant": "close",
+      "heading": "Next phase",
+      "subheading": "Three changes — none of which change the method",
+      "meta": "Rolling out-of-sample calibration · Other renewables & interconnector · Residual requirement to purchase quantity",
+      "lines": [
+        {
+          "id": "p1-10-l1",
+          "text": "Three things I would take to the next phase. Calibrate the band on a rolling out-of-sample window rather than the month itself. Extend the same treatment to your other renewables and the interconnector. And wire the residual requirement into your demand forecast, so the output becomes a purchase quantity."
+        },
+        {
+          "id": "p1-10-l2",
+          "text": "The pilot is deliberately wind-only and January-only. That was the scope. The method does not change when we widen it."
+        }
+      ]
+    },
+    {
+      "id": "p2-01",
+      "part": 2,
+      "kind": "card",
+      "variant": "section",
+      "heading": "Part two",
+      "subheading": "Architecture, design, analysis and code",
+      "meta": "For the technical lead",
+      "lines": [
+        {
+          "id": "p2-01-l1",
+          "text": "Part two: the architecture, the design, the analysis, and the code base."
+        }
+      ]
+    },
+    {
+      "id": "p2-02",
+      "part": 2,
+      "kind": "doc",
+      "variant": "architecture",
+      "heading": "Shape of the system",
+      "lines": [
+        {
+          "id": "p2-02-l1",
+          "text": "Three layers. Ingestion, pulling Elexon's FUEL H H and WINDFOR into SQLite with provenance. A pure analytics core with no input output. A FastAPI layer composing product views. The front end is React and TypeScript."
+        },
+        {
+          "id": "p2-02-l2",
+          "text": "SQLite is deliberate: thirty thousand rows, so docker compose up is dependency-free and the store ships in the serverless bundle."
+        }
+      ]
+    },
+    {
+      "id": "p2-03",
+      "part": 2,
+      "kind": "doc",
+      "variant": "api-migration",
+      "heading": "Problem 1 — the API in the brief is retired",
+      "lines": [
+        {
+          "id": "p2-03-l1",
+          "text": "First problem, and it would have sunk the project silently. The brief points at bmrs dot elexon dot co dot uk — that endpoint was retired, and the host now serves a shell page."
+        },
+        {
+          "id": "p2-03-l2",
+          "text": "The live, key-free API is the Elexon Insights API at data dot elexon dot co dot uk, slash bmrs, slash api, slash v one. Same resource names, different parameters."
+        },
+        {
+          "id": "p2-03-l3",
+          "text": "The trap: the legacy publish date parameter is silently ignored. The request looks successful and returns the wrong window. No error, just wrong data."
+        },
+        {
+          "id": "p2-03-l4",
+          "text": "We took the names from the published OpenAPI document and assert them in the client. The client also retries with backoff, chunks date windows, and upserts on natural keys, so the pipeline is idempotent."
+        }
+      ]
+    },
+    {
+      "id": "p2-04",
+      "part": 2,
+      "kind": "doc",
+      "variant": "grids",
+      "heading": "Problem 2 — the two datasets are on different grids",
+      "lines": [
+        {
+          "id": "p2-04-l1",
+          "text": "Second problem, and this decides whether the numbers mean anything. Actuals are half-hourly, forty-eight settlement periods a day. The forecast is hourly. So every metric needs an explicit reconciliation, in one place."
+        },
+        {
+          "id": "p2-04-l2",
+          "text": "Primary metrics compare the forecast hour with the energy-weighted mean of the two settlement periods in it. Both sides are hour-long averages, so no resolution is invented."
+        },
+        {
+          "id": "p2-04-l3",
+          "text": "The settlement-period view holds the hourly forecast flat across the hour, which preserves energy exactly — asserted in a test. We deliberately do not interpolate onto half-hours; that would fabricate a ramp the publisher never published. Sign convention: forecast minus outturn, so positive means the desk was short."
+        }
+      ]
+    },
+    {
+      "id": "p2-05",
+      "part": 2,
+      "kind": "doc",
+      "variant": "decision",
+      "heading": "Problem 3 — “the latest forecast” is a decision rule",
+      "lines": [
+        {
+          "id": "p2-05-l1",
+          "text": "Third problem: the phrase the latest forecast is ambiguous. The app must reproduce the desk's information set, not the newest vintage in the database."
+        },
+        {
+          "id": "p2-05-l2",
+          "text": "The rule is one line, defined once and unit tested: the latest publication with publish time less than or equal to the cut-off, eleven o'clock local on D minus one. The publisher issues eight vintages a day, so the newest at that cut-off is the nine-thirty."
+        },
+        {
+          "id": "p2-05-l3",
+          "text": "Because the rule is parameterised by cut-off, the same endpoint answers what did we know at ten o'clock — which builds the information timeline."
+        }
+      ]
+    },
+    {
+      "id": "p2-06",
+      "part": 2,
+      "kind": "doc",
+      "variant": "bands",
+      "heading": "From measured error to a tradeable band",
+      "lines": [
+        {
+          "id": "p2-06-l1",
+          "text": "The promise is that the error is quantified in a form a buyer can trade against. We do not assume a normal distribution. The band is empirical."
+        },
+        {
+          "id": "p2-06-l2",
+          "text": "From the decision-horizon sample we take quantiles of the absolute error, the downside and the upside, plus a level-scaled variant, because a windy day carries a bigger error."
+        }
+      ]
+    },
+    {
+      "id": "p2-07",
+      "part": 2,
+      "kind": "doc",
+      "variant": "tests",
+      "heading": "Codebase and practices",
+      "lines": [
+        {
+          "id": "p2-07-l1",
+          "text": "The analytics core is pure functions over loaded rows, so the statistics are unit tested against hand-computed fixtures: mean absolute error, root mean squared error, quantiles, the MAPE near-zero guard, energy totals."
+        },
+        {
+          "id": "p2-07-l2",
+          "text": "Decision logic is tested at its boundaries: a publication exactly on the cut-off, one after it, incomplete coverage, none at all. Grid alignment has an energy-preservation test. Thirty-three tests, plus a type check and production build."
+        },
+        {
+          "id": "p2-07-l3",
+          "text": "Configuration is environment driven and twelve-factor; the same image runs locally, in Docker and on Vercel. Every ingestion run records its query, row counts and timestamps, and that lineage table is in the interface."
+        }
+      ]
+    },
+    {
+      "id": "p2-08",
+      "part": 2,
+      "kind": "doc",
+      "variant": "deploy",
+      "heading": "Deployment and honest limitations",
+      "lines": [
+        {
+          "id": "p2-08-l1",
+          "text": "Deployment: Docker for the containerised path, Vercel for the live demo. The app is a static build, the FastAPI service a Python function, with the SQLite store bundled read-only."
+        },
+        {
+          "id": "p2-08-l2",
+          "text": "And the limitations, which I would rather you hear from me. The pilot is wind-only and January-only, as scoped. The band is calibrated in-sample on the month it is applied to, so it describes January rather than predicting it. And the settlement-period errors are indicative."
+        }
+      ]
+    },
+    {
+      "id": "p2-09",
+      "part": 2,
+      "kind": "card",
+      "variant": "end",
+      "heading": "Thank you",
+      "subheading": "Code, data lineage, methodology and tests are in the repository",
+      "meta": "Wind Desk · day-ahead wind forecast & accuracy portal",
+      "lines": [
+        {
+          "id": "p2-09-l1",
+          "text": "The repository holds the code, the data lineage, the methodology and the tests. Happy to go deeper on any part of it."
+        }
+      ]
+    }
+  ]
+}

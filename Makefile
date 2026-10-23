@@ -14,7 +14,7 @@ PY  = $(if $(wildcard $(VENV_PYTHON)),$(VENV_PYTHON),$(VENV_BIN))
 .DEFAULT_GOAL := help
 .PHONY: help install install-backend install-frontend ingest dev-api dev-web \
         test test-backend test-frontend build check docker-build up down logs \
-        docker-ingest shots clean
+        docker-ingest shots video clean
 
 help:
 	@echo "Wind Desk"
@@ -28,6 +28,7 @@ help:
 	@echo "  make down           stop the Docker stack"
 	@echo "  make shots          capture UI screenshots into docs/screenshots"
 	@echo "  make check          headless UI smoke check against a running stack"
+	@echo "  make video          render the demo video into tools/video/out"
 
 install: install-backend install-frontend
 
@@ -80,6 +81,10 @@ shots:
 
 check:
 	node tools/shots/check.mjs http://127.0.0.1:8080
+
+video:
+	npm --prefix tools/video install --no-audit --no-fund
+	node tools/video/build.mjs http://127.0.0.1:8080
 
 clean:
 	rm -rf frontend/dist frontend/node_modules $(VENV) .pytest_cache backend/.pytest_cache

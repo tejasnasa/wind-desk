@@ -1,0 +1,15 @@
+{
+    "name": "wind-desk-video-tools",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "description": "Demo-video production pipeline (not part of the application).",
+    "scripts": {
+        "cards": "node cards.mjs",
+        "record": "node record.mjs",
+        "build": "node build.mjs"
+    },
+    "devDependencies": {
+        "playwright-core": "^1.56.0"
+    }
+}

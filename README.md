@@ -179,12 +179,19 @@ Requirements: Python ≥ 3.11, Node ≥ 20, Docker (for the containerised path).
 ├── docs/
 │   ├── methodology.md          # full metric definitions, assumptions, caveats
 │   ├── screenshots/            # UI captures used in this README and the video
-│   └── video/                  # demo video scripts and storyboard
+│   └── video/                  # demo video scripts, storyboard and build notes
 │
-└── tools/shots/                # screenshot + headless smoke-check tooling (not part of the app)
-    ├── shots.mjs               # captures the UI into docs/screenshots
-    ├── zoom.mjs                # captures the settlement-period detail table
-    └── check.mjs               # headless check: no console errors, no failed requests
+├── tools/
+│   ├── shots/                  # screenshot + headless smoke-check tooling
+│   │   ├── shots.mjs           # captures the UI into docs/screenshots
+│   │   ├── zoom.mjs            # captures the settlement-period detail table
+│   │   └── check.mjs           # headless check: no console errors, no failed requests
+│   └── video/                  # demo-video production pipeline (script → MP4)
+│       ├── script.json         # the narration and the scene plan (single source of truth)
+│       ├── tts.ps1             # Windows SAPI narration, no network needed
+│       ├── cards.mjs           # renders the slides
+│       ├── record.mjs          # records the app segments against the timeline
+│       └── build.mjs           # assembles clips, audio, captions and the final MP4
 ```
 
 ---
@@ -355,10 +362,22 @@ all pages clean
 
 ## Demo video
 
-- Scripts, scene list and narration: [`docs/video/`](docs/video/)
-- Part 1 — client pitch (≤ 5 min): the product, the problem, the January findings.
-- Part 2 — technical review (≤ 5 min): architecture, data model, the grid-alignment and
+The demo is **rendered from a script**, so it can be rebuilt after any change to the app:
+
+```bash
+docker compose up --build -d
+npm --prefix tools/video install
+node tools/video/build.mjs http://127.0.0.1:8080
+```
+
+- Scripts, narration and storyboard: [`docs/video/`](docs/video/)
+- Part 1 — client pitch (4:17): the product, the problem, the January findings.
+- Part 2 — technical review (4:59): architecture, data model, the grid-alignment and
   decision-rule decisions, testing and deployment.
+- Full video: 9:16 — inside the brief's 5-minute-per-part and 10-minute-total limits.
+
+The rendered MP4s are written to `tools/video/out/` and are not committed (67 MB);
+regenerate them with the command above.
 
 Upload it as an **unlisted** YouTube video and link it in the submission form:
 **`<fill in after uploading>`**

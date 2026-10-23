@@ -19,6 +19,10 @@ backend/data/*.db-journal
 backend/data/*.db-wal
 backend/data/*.db-shm
 
+# Video build artefacts (regenerate with `make video`)
+tools/video/work/
+tools/video/out/
+
 # Environment
 .env
 .env.local
