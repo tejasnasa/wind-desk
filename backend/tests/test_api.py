@@ -127,3 +127,32 @@ def test_unknown_delivery_day_is_reported_not_crashed(client):
 def test_invalid_date_is_a_400(client):
     response = client.get("/api/decision/not-a-date")
     assert response.status_code == 400
+
+
+def test_every_accuracy_endpoint_accepts_a_date_window(client):
+    """Regression: an explicit window must work on every accuracy endpoint.
+
+    The window parameters used to be parsed twice, so a value that FastAPI had
+    already turned into a ``date`` was handed to ``date.fromisoformat`` and
+    raised a 500.
+    """
+    endpoints = [
+        "/api/accuracy/summary",
+        "/api/accuracy/series",
+        "/api/accuracy/by-lead-time",
+        "/api/accuracy/by-hour",
+        "/api/accuracy/by-weekday",
+        "/api/accuracy/distribution",
+        "/api/accuracy/heatmap",
+        "/api/accuracy/baselines",
+        "/api/accuracy/ribbon",
+        "/api/accuracy/export.csv",
+    ]
+    for endpoint in endpoints:
+        response = client.get(f"{endpoint}?date_from=2026-01-05&date_to=2026-01-18")
+        assert response.status_code == 200, f"{endpoint} -> {response.status_code}"
+
+
+def test_invalid_window_is_a_400(client):
+    response = client.get("/api/accuracy/summary?date_from=not-a-date")
+    assert response.status_code == 400

@@ -16,8 +16,7 @@ If no publication fully covers the delivery day, the latest publication with
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import date, datetime, time, timedelta
-from zoneinfo import ZoneInfo
+from datetime import date, datetime, time, timedelta, tzinfo
 
 from ..timeutils import UTC
 
@@ -58,7 +57,7 @@ class PublishSelection:
 def decision_cutoff(
     delivery_date: date,
     gate_closure: time,
-    tz: ZoneInfo,
+    tz: tzinfo,
     days_before: int = 1,
 ) -> datetime:
     """UTC instant of the gate closure for ``delivery_date``.
@@ -70,7 +69,7 @@ def decision_cutoff(
     return local.astimezone(UTC)
 
 
-def delivery_day_hours(delivery_date: date, tz: ZoneInfo) -> list[datetime]:
+def delivery_day_hours(delivery_date: date, tz: tzinfo) -> list[datetime]:
     """UTC hour starts whose *local* date equals ``delivery_date``.
 
     Returns 23, 24 or 25 entries depending on the BST transition.

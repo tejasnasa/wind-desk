@@ -12,7 +12,7 @@ All conversions live here so that the rest of the code never has to guess.
 
 from __future__ import annotations
 
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone, tzinfo
 from zoneinfo import ZoneInfo
 
 UTC = timezone.utc
@@ -43,13 +43,13 @@ def parse_date(value: str) -> date:
     return datetime.strptime(value, "%Y-%m-%d").date()
 
 
-def local_midnight_utc(local_day: date, tz: ZoneInfo = LONDON) -> datetime:
+def local_midnight_utc(local_day: date, tz: tzinfo = LONDON) -> datetime:
     """UTC instant of 00:00 local time on ``local_day``."""
     return datetime.combine(local_day, datetime.min.time(), tzinfo=tz).astimezone(UTC)
 
 
 def local_day_bounds_utc(
-    local_day: date, tz: ZoneInfo = LONDON
+    local_day: date, tz: tzinfo = LONDON
 ) -> tuple[datetime, datetime]:
     """[start, end) UTC instants of a local delivery day.
 
@@ -60,12 +60,12 @@ def local_day_bounds_utc(
     return start, end
 
 
-def local_date_of(moment: datetime, tz: ZoneInfo = LONDON) -> date:
+def local_date_of(moment: datetime, tz: tzinfo = LONDON) -> date:
     """Local calendar date of an instant."""
     return moment.astimezone(tz).date()
 
 
-def settlement_period_of(moment: datetime, tz: ZoneInfo = LONDON) -> int:
+def settlement_period_of(moment: datetime, tz: tzinfo = LONDON) -> int:
     """GB settlement period (1..48) of an instant."""
     local = moment.astimezone(tz)
     return local.hour * 2 + local.minute // 30 + 1

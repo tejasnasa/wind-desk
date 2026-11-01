@@ -8,7 +8,7 @@
  *   node tools/video/cards.mjs
  */
 import { chromium } from "playwright-core";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -383,7 +383,7 @@ slides.tests = () =>
     body: `<h2>What a reviewer should not have to take on trust</h2>
     <div class="grid2" style="margin-top:28px;grid-template-columns:1.05fr 1fr">
       <div class="card">
-        <div style="font-weight:600;font-size:24px;margin-bottom:16px">33 pytest tests</div>
+        <div style="font-weight:600;font-size:24px;margin-bottom:16px">${testCount()} pytest tests</div>
         <div style="display:flex;flex-direction:column;gap:12px;font-size:21px">
           ${[
             [
@@ -400,7 +400,10 @@ slides.tests = () =>
             ],
             [
               "API surface",
-              "selected vintage, daily aggregate consistency, window defaults, CSV export, empty-day handling",
+              [
+                "API surface",
+                "selected vintage, daily aggregate consistency, window defaults, CSV export, empty-day handling, and an explicit date window on every endpoint",
+              ],
             ],
           ]
             .map(
@@ -458,6 +461,18 @@ slides.deploy = () =>
     </div>`,
     footRight: "docker-compose.yml · vercel.json · Dockerfile · Procfile",
   });
+
+/** Count the pytest test functions, so the slide cannot drift from the suite. */
+function testCount() {
+  const dir = join(here, "..", "..", "backend", "tests");
+  let total = 0;
+  for (const name of readdirSync(dir)) {
+    if (!name.endsWith(".py")) continue;
+    const source = readFileSync(join(dir, name), "utf8");
+    total += (source.match(/^def test_/gm) ?? []).length;
+  }
+  return total;
+}
 
 /* ------------------------------------------------------------------ run */
 

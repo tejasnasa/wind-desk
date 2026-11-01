@@ -19,7 +19,7 @@ from fastapi.responses import StreamingResponse
 
 from ..config import settings
 from ..service import AnalysisService
-from ..timeutils import UTC
+from ..timeutils import UTC, parse_date
 
 router = APIRouter(prefix="/api")
 service = AnalysisService()
@@ -32,9 +32,17 @@ def _envelope(data: Any, **meta: Any) -> dict:
     }
 
 
-def _parse_date(value: str | None) -> date | None:
-    if not value:
+def _parse_date(value: str | date | None) -> date | None:
+    """Normalise a date parameter.
+
+    FastAPI converts a parameter annotated as ``date`` before it reaches us, so
+    the value can already be a ``date``; a hand-written query string arrives as
+    ``str``.
+    """
+    if value is None:
         return None
+    if isinstance(value, date):
+        return value
     try:
         return date.fromisoformat(value)
     except ValueError as exc:
@@ -139,7 +147,7 @@ def accuracy_series(date_from: str | None = None, date_to: str | None = None) ->
 
 @router.get("/accuracy/by-lead-time")
 def accuracy_by_lead_time(
-    date_from: str | None = None, date_to: date | None = None
+    date_from: str | None = None, date_to: str | None = None
 ) -> dict:
     payload = service.accuracy_by_lead_time(
         _parse_date(date_from), _parse_date(date_to)
@@ -148,14 +156,14 @@ def accuracy_by_lead_time(
 
 
 @router.get("/accuracy/by-hour")
-def accuracy_by_hour(date_from: str | None = None, date_to: date | None = None) -> dict:
+def accuracy_by_hour(date_from: str | None = None, date_to: str | None = None) -> dict:
     rows = service.accuracy_by_hour(_parse_date(date_from), _parse_date(date_to))
     return _envelope(rows, n=len(rows))
 
 
 @router.get("/accuracy/by-weekday")
 def accuracy_by_weekday(
-    date_from: str | None = None, date_to: date | None = None
+    date_from: str | None = None, date_to: str | None = None
 ) -> dict:
     rows = service.accuracy_by_weekday(_parse_date(date_from), _parse_date(date_to))
     return _envelope(rows, n=len(rows))
@@ -163,7 +171,7 @@ def accuracy_by_weekday(
 
 @router.get("/accuracy/distribution")
 def accuracy_distribution(
-    date_from: str | None = None, date_to: date | None = None
+    date_from: str | None = None, date_to: str | None = None
 ) -> dict:
     payload = service.accuracy_distribution(
         _parse_date(date_from), _parse_date(date_to)
@@ -172,14 +180,14 @@ def accuracy_distribution(
 
 
 @router.get("/accuracy/heatmap")
-def accuracy_heatmap(date_from: str | None = None, date_to: date | None = None) -> dict:
+def accuracy_heatmap(date_from: str | None = None, date_to: str | None = None) -> dict:
     payload = service.accuracy_heatmap(_parse_date(date_from), _parse_date(date_to))
     return _envelope(payload)
 
 
 @router.get("/accuracy/baselines")
 def accuracy_baselines(
-    date_from: str | None = None, date_to: date | None = None
+    date_from: str | None = None, date_to: str | None = None
 ) -> dict:
     payload = service.accuracy_baselines(_parse_date(date_from), _parse_date(date_to))
     return _envelope(payload)
@@ -225,14 +233,14 @@ def admin_ingest(
 
     from ..data.elexon import ElexonClient
     from ..data.ingest import ingest_all
-    from ..timeutils import parse_date
+    from ..timeutils import parse_iso
 
     client = ElexonClient()
     results = ingest_all(
         client,
         parse_date(settings.default_actual_from),
         parse_date(settings.default_actual_to),
-        _parse_datetime(f"{settings.default_forecast_publish_from}T00:00:00Z"),
-        _parse_datetime(f"{settings.default_forecast_publish_to}T00:00:00Z"),
+        parse_iso(f"{settings.default_forecast_publish_from}T00:00:00Z"),
+        parse_iso(f"{settings.default_forecast_publish_to}T00:00:00Z"),
     )
     return _envelope([r.as_dict() for r in results])

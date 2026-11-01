@@ -313,7 +313,7 @@ Everything that can be produced inside this repository is built, tested and veri
 
 | Check               | Result                                                                            |
 | ------------------- | --------------------------------------------------------------------------------- |
-| `make test`         | 33 pytest tests pass; `tsc --noEmit` + Vite production build clean                |
+| `make test`         | 35 pytest tests pass; `tsc --noEmit` + Vite production build clean                |
 | `docker compose up` | API on `:8000`, SPA on `:8080` behind nginx; `/api` proxied to one origin         |
 | `make check`        | all four pages render with no console error, no failed request, no HTTP ≥ 400     |
 | Data                | 3,696 actuals + 25,696 forecast rows (352 publications) in `backend/data/wind.db` |

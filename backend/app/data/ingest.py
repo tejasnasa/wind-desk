@@ -10,13 +10,13 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
 from sqlalchemy.dialects.sqlite import insert as sqlite_insert
 
 from ..db import session_scope
 from ..models import ActualGeneration, DataRun, WindForecast
-from .elexon import ApiRecord, ElexonClient
+from .elexon import ElexonClient
 
 log = logging.getLogger(__name__)
 
@@ -65,11 +65,15 @@ def _record_run(
 
 def ingest_actuals(
     client: ElexonClient,
-    date_from: datetime,
-    date_to: datetime,
+    date_from: date,
+    date_to: date,
     fuel_type: str = "WIND",
 ) -> IngestResult:
-    """Pull half-hourly actuals and upsert them."""
+    """Pull half-hourly actuals and upsert them.
+
+    ``date_from``/``date_to`` are settlement dates; a ``datetime`` is accepted
+    too because it is a ``date`` subclass.
+    """
     started = _now()
     query = {
         "dataset": "FUELHH",
@@ -161,8 +165,8 @@ def ingest_forecasts(
 
 def ingest_all(
     client: ElexonClient,
-    actual_from: datetime,
-    actual_to: datetime,
+    actual_from: date,
+    actual_to: date,
     publish_from: datetime,
     publish_to: datetime,
 ) -> list[IngestResult]:

@@ -23,7 +23,7 @@ from .analytics.bands import BandProfile
 from .analytics.metrics import EvalPair
 from .config import settings
 from .data.repository import ActualRow, ForecastRow, Repository
-from .timeutils import UTC, parse_date, parse_iso
+from .timeutils import UTC, parse_date
 
 log = logging.getLogger(__name__)
 
@@ -289,7 +289,7 @@ class AnalysisService:
         payload = profile.as_dict()
         energy = {}
         for level in BAND_LEVELS:
-            key = f"p{int(round(level * 100))}"
+            key = f"p{round(level * 100)}"
             width = bands.band_for_level(profile, level)
             energy[key] = {
                 "band_mw": round(width, 1),
@@ -704,8 +704,3 @@ class AnalysisService:
 
     def available_publishes(self) -> list[str]:
         return [p.isoformat() for p in self.snapshot().publish_times]
-
-    def parse_as_of(raw: str | None) -> datetime | None:
-        if not raw:
-            return None
-        return parse_iso(raw)

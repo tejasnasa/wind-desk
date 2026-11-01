@@ -192,12 +192,15 @@ for (const scene of scenes) {
   const out = join(clipsDir, `${scene.id}.mp4`);
   clipFiles.push(out);
 
-  // The cache key covers both the timeline and the recording, so a change to
-  // either one invalidates the clip.
+  // The cache key covers the timeline, the recording and the rendered card,
+  // so a change to any of them invalidates the clip.
   const sourceHash =
     scene.kind === "app"
       ? (recordings.find((r) => r.id === scene.id)?.hash ?? "none")
-      : "card";
+      : createHash("sha1")
+          .update(readFileSync(join(work, "cards", `${scene.id}.png`)))
+          .digest("hex")
+          .slice(0, 12);
   const clipKey = `${timelineHash}:${sourceHash}`;
 
   const cached =
@@ -292,7 +295,10 @@ writeFileSync(
         `${timelineHash}:${
           s.kind === "app"
             ? (recordings.find((r) => r.id === s.id)?.hash ?? "none")
-            : "card"
+            : createHash("sha1")
+                .update(readFileSync(join(work, "cards", `${s.id}.png`)))
+                .digest("hex")
+                .slice(0, 12)
         }`,
       ]),
     ),

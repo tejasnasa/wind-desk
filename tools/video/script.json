@@ -383,7 +383,7 @@
         },
         {
           "id": "p2-07-l2",
-          "text": "Decision logic is tested at its boundaries: a publication exactly on the cut-off, one after it, incomplete coverage, none at all. Grid alignment has an energy-preservation test. Thirty-three tests, plus a type check and production build."
+          "text": "Decision logic is tested at its boundaries: a publication exactly on the cut-off, one after it, incomplete coverage, none at all. Grid alignment has an energy-preservation test. Thirty-five tests, plus a type check and production build."
         },
         {
           "id": "p2-07-l3",

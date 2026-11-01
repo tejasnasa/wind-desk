@@ -113,7 +113,7 @@ the code and the tests that prove it.
 >
 > Decision logic is tested at its boundaries: a publication exactly on the cut-off, one
 > after it, incomplete coverage, none at all. Grid alignment has an energy-preservation
-> test. Thirty-three tests, plus a type check and production build.
+> test. Thirty-five tests, plus a type check and production build.
 >
 > Configuration is environment driven and twelve-factor; the same image runs locally, in
 > Docker and on Vercel. Every ingestion run records its query, row counts and timestamps,

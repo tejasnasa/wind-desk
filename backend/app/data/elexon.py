@@ -18,7 +18,7 @@ import logging
 import time as _time
 from collections.abc import Iterator
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from typing import Any
 
 import httpx
@@ -138,8 +138,8 @@ class ElexonClient:
     # ------------------------------------------------------------- datasets
     def fetch_actuals(
         self,
-        date_from: datetime,
-        date_to: datetime,
+        date_from: date,
+        date_to: date,
         fuel_type: str = "WIND",
         chunk_days: int = 31,
     ) -> list[ApiRecord]:

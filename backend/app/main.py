@@ -62,15 +62,16 @@ def root_health() -> dict:
 
 # --- optional single-container static hosting (the Docker image serves the SPA)
 if settings.static_dir and settings.static_dir.exists():
-    assets = settings.static_dir / "assets"
+    static_dir = settings.static_dir
+    assets = static_dir / "assets"
     if assets.exists():
         app.mount("/assets", StaticFiles(directory=assets), name="assets")
 
     @app.get("/{full_path:path}", include_in_schema=False)
     def spa(full_path: str):
-        index = settings.static_dir / "index.html"
-        if full_path and (settings.static_dir / full_path).exists():
-            return FileResponse(settings.static_dir / full_path)
+        index = static_dir / "index.html"
+        if full_path and (static_dir / full_path).exists():
+            return FileResponse(static_dir / full_path)
         if index.exists():
             return FileResponse(index)
         return JSONResponse({"detail": "not found"}, status_code=404)

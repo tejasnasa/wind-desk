@@ -325,7 +325,7 @@ docker compose up --build      # web on :8080, api on :8000
 
 ```bash
 make test            # backend pytest suite + front-end type check and production build
-make test-backend    # 33 tests: metrics maths, decision logic, grid alignment, API smoke
+make test-backend    # 35 tests: metrics maths, decision logic, grid alignment, API smoke
 ```
 
 The suite covers the parts a reviewer should not have to take on trust:
